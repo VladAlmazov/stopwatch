@@ -2,6 +2,7 @@ import React from 'react';
 import {useEffect, useState} from 'react';
 import {interval, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import s from './App.module.css'
 
 type Status = 'run' | 'stop' | 'wait';
 
@@ -15,7 +16,7 @@ function App() {
         interval(1000)
             .pipe(takeUntil(unsubscribe$))
             .subscribe(() => {
-                if (status === "run") {
+                if (status === 'run') {
                     setSec(val => val + 1000);
                 }
             });
@@ -47,16 +48,18 @@ function App() {
 
     return (
         <div>
-            <div>
-                <span> {new Date(sec).toISOString().slice(11, 19)}</span>
-                <button className="start-button" onClick={start} disabled={disabled}>
-                    Start
-                </button>
-                <button className="stop-button" onClick={stop} >
-                    Stop
-                </button>
-                <button onClick={reset} >Reset</button>
-                <button onClick={wait} >Wait</button>
+            <div className={s.container}>
+                <span className={s.display}> {new Date(sec).toISOString().slice(11, 19)}</span>
+                <div>
+                    <button className="start-button" onClick={start} disabled={disabled}>
+                        Start
+                    </button>
+                    <button className="stop-button" onClick={stop}>
+                        Stop
+                    </button>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={wait}>Wait</button>
+                </div>
             </div>
         </div>
     );
